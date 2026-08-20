@@ -53,28 +53,30 @@ for i in range(4):                                                              
     cards.append(new_card)                                                          # добавляем карточку в список карточек cards
     x += 100                                                                        # и меняем положение x для следующей карточки
 
-wait = 0                                                                            # wait - важный счётчик, благодаря ей надпись click перескочит 
-                                                                                    # на след. карточку не мгновенно, а спустя каждые 20 кадров
-time_text = Label(20, 20, 50, 50, BACK)
-time_text.set_text('Время:', 40, DARK_BLUE)
-time_text.draw(0,0)
 
-timer = Label(50, 55, 50, 40, BACK)
+time_text = Label(20, 20, 50, 50, BACK)                                             # time_text это надпись "Время:"
+time_text.set_text('Время:', 40, DARK_BLUE)                                         # класс Label создаёт текстовый объект, метод set_text задаёт ему текст,
+time_text.draw(0,0)                                                                 # а метод draw отрисовывет его на экране                                                                 
+
+timer = Label(50, 55, 50, 40, BACK)                                                 # timer это надпись счёта времени под надписью "Время", то есть 0, 1, 2 и т.д.
 timer.set_text('0', 40, DARK_BLUE)
 timer.draw(0,0)
 
 
-score_text = Label(400, 20, 50, 50, BACK)
+score_text = Label(400, 20, 50, 50, BACK)                                           # score_text это надпись "Счёт:"
 score_text.set_text('Счёт:', 45, DARK_BLUE)
 score_text.draw(0,0)
 
-score = Label(430, 55, 50, 40, BACK)
+score = Label(430, 55, 50, 40, BACK)                                                # score это надпись счёта очков под надписью "Счёт", то есть 0, 1, 2 и т.д.
 score.set_text('0', 40, DARK_BLUE)
 score.draw(0,0)
 
 
-start = time()
-points = 0
+start = time()                                                                      # фиксируем время начала игры (не забудьте импортировать функцию time!)
+points = 0                                                                          # и создаём счётчик очков
+
+wait = 0                                                                            # wait - важный счётчик, благодаря ей надпись click перескочит 
+                                                                                    # на след. карточку не мгновенно, а спустя каждые 20 кадров
 
 while True:                                                                         # начинаем игровой цикл!
       
@@ -101,34 +103,35 @@ while True:                                                                     
                     else:
                         cards[i].color = RED                                               # иначе ставим красный!
                         points -= 1
-                  cards[i].fill()                                                        # не забываем каждую карточку заполнить изменённым цветом!
+                    cards[i].fill()                                                        # не забываем каждую карточку заполнить изменённым цветом!
 
-                  score.set_text(str(points), 40, DARK_BLUE)
-                  score.draw(0,0)
+                    score.set_text(str(points), 40, DARK_BLUE)
+                    score.draw(0,0)
 
-    now_time = time()
-    timer.set_text(str(int(now_time - start)), 40, DARK_BLUE)
-    timer.draw(0,0)
+    now_time = time()                                                               # фиксируем настоящее время программы
+    timer.set_text(str(int(now_time - start)), 40, DARK_BLUE)                       # меняем надпись timer на разницу между временем конца и начала программы
+    timer.draw(0,0)                                                                 # и отрисовываем её!
 
 
-    if now_time - start  >= 11:
-        win = Label(0, 0, 500, 500, LIGHT_RED)
+    if now_time - start  >= 11:                                                     # условие проигрыша - если разница времени 11 и больше секунд,                                                              
+        win = Label(0, 0, 500, 500, LIGHT_RED)                                            # создаём и выводим надпись проигрыша, прерываем игровой цикл
         win.set_text("Время вышло!", 60, DARK_BLUE)
         win.draw(110, 180)
         break
 
-    if points >= 5:
-        win = Label(0, 0, 500, 500, LIGHT_GREEN)
+    if points >= 5:                                                                 # условие победы - если набрано 5 и больше очков,                                                                          
+        win = Label(0, 0, 500, 500, LIGHT_GREEN)                                          # создаём и выводим надпись выигрыша
         win.set_text("Ты победил!", 60, DARK_BLUE)
         win.draw(140, 180)
 
-        result_time = Label(90, 230, 250, 250, LIGHT_GREEN)
-        result_time.set_text(f"Время прохождения: {str(int(new_time - start))} сек", 40, DARK_BLUE)
+        result_time = Label(90, 230, 250, 250, LIGHT_GREEN)                               # создаём и выводим статистику, прерываем игровой цикл
+        result_time.set_text(f"Время прохождения: {str(int(now_time - start))} сек", 40, DARK_BLUE)
         result_time.draw(0,0)
         break
 
     pg.display.update()
     clock.tick(40)                                                                  # не забываем обновлять экран и установить кол-во кадров в секунду (fps)
 
-pg.display.update()
+pg.display.update()                                                                 # ВАЖНО!!!! Обновите экран ещё раз после окончания цикла!!!!!                           
+
 
